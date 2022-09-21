@@ -81,7 +81,8 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Trung
+                    Trung a
+                    
                 </div>
 
                 <div class="links">
