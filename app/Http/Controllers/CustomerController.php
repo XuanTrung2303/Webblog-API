@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use Illuminate\Http\Request;
-
+use App\Http\Resources\CustomerResource;
+use App\Http\Resources\CustomerCollection;
 class CustomerController extends Controller
 {
     /**
@@ -14,7 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return Customer::all();
+        return new CustomerCollection(Customer::paginate(5));
     }
 
     /**
@@ -35,8 +36,17 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $data = customer::create($request->all());
-        return response()->json($data,200);
+        $request->validate([
+            'name_customer' => 'required',
+            'email_customer'=>'required',
+            'phone_customer' => 'required',
+            'address_customer'=>'required',
+            'city_customer' => 'required',
+        ]);
+        $customer = Customer::create($request->all());
+        return new CustomerResource($customer);
+        // $data = customer::create($request->all());
+        // return response()->json($data,200);
     }
 
     /**
@@ -45,9 +55,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($customer)
+    public function show(Customer $customer)
     {
-        return Customer::find($customer);
+        return new CustomerResource($customer);
     }
 
     /**
@@ -68,9 +78,11 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Customer $customer)
     {
-        //
+        $customer->update($request->all());
+
+        return new CustomerResource($customer);
     }
 
     /**
@@ -79,8 +91,8 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
     }
 }
