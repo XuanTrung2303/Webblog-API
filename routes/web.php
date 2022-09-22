@@ -13,6 +13,9 @@
 
 // use Illuminate\Routing\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','HomeController@index');
+Route::get('/bai-viet/{id}', 'BaivietController@show');
+
+Auth::routes();
+
+Route::get('/home', 'LoginController@index')->name('home');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use App\CategoryPost;
 use Illuminate\Http\Request;
@@ -13,8 +13,8 @@ class CategoryPostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   $category = CategoryPost::all();
+        return view('layouts.category.index')->with(compact('category'));
     }
 
     /**
@@ -24,7 +24,7 @@ class CategoryPostController extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.category.create');
     }
 
     /**
@@ -35,7 +35,10 @@ class CategoryPostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new CategoryPost();
+        $category->title = $request->title;
+        $category->save();
+        return redirect()->back();
     }
 
     /**
@@ -78,8 +81,10 @@ class CategoryPostController extends Controller
      * @param  \App\CategoryPost  $categoryPost
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CategoryPost $categoryPost)
+    public function destroy( $CategoryPost)
     {
-        //
+        $category = CategoryPost::find($CategoryPost);
+        $category->delete();
+        return redirect()->back();
     }
 }
