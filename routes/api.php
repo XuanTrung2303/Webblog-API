@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //except tru ra
 Route::prefix('v1')->group(function(){
     Route::resource('customer','Api\v1\CustomerController')->only(['show','edit','create','update','destroy','store','index']);
+    Route::resource('category','Api\v1\CategoryPostController');
 });
 Route::prefix('v2')->group(function(){
     Route::resource('customer','Api\v2\CustomerController')->only(['show']);//,'edit','create','update','destroy','store','index']);

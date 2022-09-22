@@ -45,7 +45,7 @@ class BaivietController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('pages.details');
     }
 
     /**
