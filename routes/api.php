@@ -16,4 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::resource('customer','CustomerController');
+
+//only chi
+//except tru ra
+Route::prefix('v1')->group(function(){
+    Route::resource('customer','Api\v1\CustomerController')->only(['show','edit','create','update','destroy','store','index']);
+});
+Route::prefix('v2')->group(function(){
+    Route::resource('customer','Api\v2\CustomerController')->only(['show']);//,'edit','create','update','destroy','store','index']);
+});
