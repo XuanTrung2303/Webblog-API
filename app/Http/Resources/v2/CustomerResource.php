@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\v2;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,10 +14,9 @@ class CustomerResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
-        // return[
-        //     "name_customer" => $this->name_customer,
-        //     "email_customer" => $this->email_customer
-        // ];
+        return [
+            'name_customer' => $this->name_customer,
+            'phone' => $this->phone_customer
+        ];
     }
 }
