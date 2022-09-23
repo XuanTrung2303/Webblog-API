@@ -2,17 +2,22 @@
 
 @section('content')
 <div class="container">
+    @if (Session::has('success'))
+    <div class="alert alert-success">
+    <p>{{Session::get('success')}}</p>
+    </div>
+    @endif
+    @if (Session::has('failure'))
+    <div class="alert alert-danger">
+    <p>{{Session::get('failure')}}</p>
+    </div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header"><a href="{{url('/home')}}"><- Back</a> Danh mục bài viết</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
                     <table class="table">
                     <thead>
                     <tr>
@@ -22,23 +27,24 @@
                     </tr>
                     </thead>
                     <tbody>
+                        @php
+                        $i = 0;
+                        @endphp
                         @foreach($category as $categories)
+                        @php
+                            $i++;
+                        @endphp
                     <tr>
-                        <th scope="row">1</th>
+                        <th scope="row">{{$i}}</th>
                         <td>{{$categories->title}}</td>
 
-                        <td> <form action="{{route('category.destroy',[$categories->id])}}" method="POST"> 
+                        <td> <form action="{{route('category.destroy',[$categories->id])}}" method="POST">
                             @method('DELETE')
                             @csrf
                             <input class="btn btn-danger mb-2 w-50" type="submit" value="Delete">
-                        </form> 
-                        <form action="{{route('category.edit',[$categories->id])}}" method="POST"> 
-                            @method('PUT')
-                            @csrf
-                            <input class="btn btn-success w-50" type="submit" value="Edit">
-                        </form>       
-                         <!-- <a href="{{route('category.edit',[$categories->id])}}">Edit</a>-->
-                        </td> 
+                        </form>
+                         <a class="btn btn-warning btn-sm w-50" href="{{route('category.show',[$categories->id])}}">Edit</a>
+                        </td>
                     </tr>
                         @endforeach
                     </tbody>
