@@ -13,9 +13,10 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                <a href="{{route('category.create')}}" class="btn btn-primary w-50 mb-2 ml-5">Thêm danh mục bài viết</a>
-                <a href="{{route('category.index')}}" class="btn btn-primary w-50 mb-2 ml-5">Hiển thị danh mục bài viết</a>
-                <a href="" class="btn btn-success w-75 mb-2 ml-5">Thêm bài viết</a >
+                <!-- <a href="{{route('category.create')}}" class="btn btn-primary w-75 mb-2 ml-5">Thêm danh mục bài viết</a> -->
+                <a href="{{route('category.index')}}" class="btn btn-primary w-75 mb-2 ml-5">Danh mục bài viết</a>
+                <!-- <a href="{{route('post.create')}}" class="btn btn-success w-75 mb-2 ml-5">Thêm bài viết</a > -->
+                <a href="{{route('post.index')}}" class="btn btn-success w-75 mb-2 ml-5">Danh sách bài viết</a >
                 </div>
             </div>
         </div>

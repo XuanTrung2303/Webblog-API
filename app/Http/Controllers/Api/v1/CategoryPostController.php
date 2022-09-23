@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\CategoryPost;
 use Illuminate\Http\Request;
-
+use Session;
 class CategoryPostController extends Controller
 {
     /**
@@ -35,10 +35,11 @@ class CategoryPostController extends Controller
      */
     public function store(Request $request)
     {
-        $category = new CategoryPost();
+
+        $category = new CategoryPost;
         $category->title = $request->title;
         $category->save();
-        return redirect()->back();
+        return redirect()->route('category.index')->with('success','Bạn đã thêm danh mục thành công');
     }
 
     /**
@@ -47,9 +48,10 @@ class CategoryPostController extends Controller
      * @param  \App\CategoryPost  $categoryPost
      * @return \Illuminate\Http\Response
      */
-    public function show(CategoryPost $categoryPost)
+    public function show($categoryPost)
     {
-        //
+        $category = CategoryPost::find($categoryPost);
+        return view('layouts.category.show')->with(compact('category'));
     }
 
     /**
@@ -70,9 +72,13 @@ class CategoryPostController extends Controller
      * @param  \App\CategoryPost  $categoryPost
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CategoryPost $categoryPost)
+    public function update(Request $request,  $categoryPost)
     {
-        //
+        $data = $request->all(); //lấy tất cả
+        $category = CategoryPost::find($categoryPost);
+        $category->title = $data['title'];
+        $category->save();
+        return redirect()->route('category.index')->with('success','Bạn đã cập nhật danh mục thành công');
     }
 
     /**
@@ -85,6 +91,6 @@ class CategoryPostController extends Controller
     {
         $category = CategoryPost::find($CategoryPost);
         $category->delete();
-        return redirect()->back();
+        return redirect()->route('category.index')->with('success','Bạn đã xóa danh mục thành công');
     }
 }
